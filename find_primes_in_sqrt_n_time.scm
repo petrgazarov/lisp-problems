@@ -37,4 +37,4 @@
         (else (prime_search_iter (+ n 1) 3 num_found)))
   )
 
-(search_for_primes 10000000)
+(search_for_primes 1000000000000)

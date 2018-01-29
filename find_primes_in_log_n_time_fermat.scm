@@ -1,23 +1,25 @@
-;;; same as "find_primes_in_sqrt_n_time.scm", but skips even numbers > 2
+;;; Similar to "find_primes_in_sqrt_n_time.scm", but in (log n) time
+;;; Uses Fermat's probibalistic algorithm
 
-(define (smallest-divisor n)
-  (find-divisor n 2))
-(define (find-divisor n test-divisor)
-  (cond ((> (square test-divisor) n) n)
-        ((divides? test-divisor n) test-divisor)
-        (else (find-divisor n (next test-divisor)))))
-(define (divides? a b)
-  (= (remainder b a) 0))
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp) (remainder (square (expmod base (/ exp 2) m)) m))
+        (else (remainder (* base (expmod base (- exp 1) m)) m))))
 
-(define (prime? n)
-    (= n (smallest-divisor n)))
-(define (next n)
-  (if (= n 2) 3 (+ n 2)))
+(define (fermat-test n)
+  (define (try-it a)
+    (= (expmod a n n) a))
+  (try-it (+ 1 (random (- n 1)))))
+
+(define (fast-prime? n times)
+  (cond ((= times 0) true)
+        ((fermat-test n) (fast-prime? n (- times 1)))
+        (else false)))
 
 (define (timed-prime-test n)
   (start-prime-test n (real-time-clock)))
 (define (start-prime-test n start-time)
-  (if (prime? n)
+  (if (fast-prime? n 10)
       (report-prime (- (real-time-clock) start-time) n)
       #f))
 (define (report-prime elapsed-time n)

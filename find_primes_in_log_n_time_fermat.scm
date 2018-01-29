@@ -1,10 +1,7 @@
 ;;; Similar to "find_primes_in_sqrt_n_time.scm", but in (log n) time
 ;;; Uses Fermat's probibalistic algorithm
 
-(define (expmod base exp m)
-  (cond ((= exp 0) 1)
-        ((even? exp) (remainder (square (expmod base (/ exp 2) m)) m))
-        (else (remainder (* base (expmod base (- exp 1) m)) m))))
+(load "expmod.scm")
 
 (define (fermat-test n)
   (define (try-it a)

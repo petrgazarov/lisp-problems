@@ -1,6 +1,6 @@
-;;; check if element exists in list
+;;; check if number exists in list
 
-(define (exists? val seq) 
+(define (exists-number? val seq) 
   (define (exists-iter seq result)
     (if (null? seq) result
       (let ((c (car seq)))
@@ -9,4 +9,4 @@
           (exists-iter (cdr seq) result)))))
   (exists-iter seq false))
 
-(display (exists? 4 (list 1 2 3 4 5)))
+(display (exists-number? 4 (list 1 2 3 4 5)))

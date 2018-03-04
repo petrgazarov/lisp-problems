@@ -1,15 +1,8 @@
-;;; sample huffman tree
+;;; makes a sample huffman tree
 
 (load "huffman-tree/selectors.scm")
-
-(define (make-leaf symbol weight)
-  (list 'leaf symbol weight))
-
-(define (make-code-tree left right)
-  (list left
-        right
-        (append (symbols left) (symbols right))
-        (+ (weight left) (weight right))))
+(load "huffman-tree/make-leaf.scm")
+(load "huffman-tree/make-code-tree.scm")
 
 (define sample-tree
   (make-code-tree (make-leaf 'A 4)
